@@ -14,56 +14,55 @@
 | birth_date         | date   | null: false               |
 
 
-
 ### Association
 - has_many :items
 - has_many :orders
-- has_many :shipping_addresses
 
 
 ## items テーブル
 
-| Column               | Type    | Options                        |
-| -------------------- | ------- | -----------------------------  |
-| name                 | string  | null: false                    |
-| description          | text    | null: false                    |
-| category_id          | integer | null: false                    |
-| item_condition_id    | integer | null: false                    |
-| shipping_fee_payer_id| integer | null: false                    |
-| prefecture_id        | integer | null: false                    |
-| days_to_ship_id      | integer | null: false                    |
-| price                | integer | null: false                    | 
-| trading_status_id    | integer | null: false                    | 
-| seller_id            | bigint  | null: false, foreign_key: true |
+| Column               | Type        | Options                        |
+| -------------------- | ------------| -----------------------------  |
+| name                 | string      | null: false                    |
+| description          | text        | null: false                    |
+| category_id          | integer     | null: false                    |
+| item_condition_id    | integer     | null: false                    |
+| shipping_fee_payer_id| integer     | null: false                    |
+| prefecture_id        | integer     | null: false                    |
+| days_to_ship_id      | integer     | null: false                    |
+| price                | integer     | null: false                    | 
+| user                 | references  | null: false, foreign_key: true |
 
 ### Association
 - has_one :order
-- belongs_to :seller, class_name: 'User'
+- belongs_to :user
 
 
 ## orders テーブル
 
-| Column                | Type    | Options                        |
-| user_id               | bigint  | null: false, foreign_key: true |
-| item_id               | bigint  | null: false, foreign_key: true |
-| shipping_address_id   | bigint  | null: false, foreign_key: true |
+| Column                | Type      | Options                        |
+| --------------------- | ----------| -----------------------------  |
+| user                  | references| null: false, foreign_key: true |
+| item                  | references| null: false, foreign_key: true |
+| shipping_address_id   | integer   | null: false                    |
 
 ### Association
 - belongs_to :user
 - belongs_to :item
-- belongs_to :shipping_address
+- has_one :shipping_address
 
 ## shipping_addresses テーブル
 
-| Column                | Type    | Options                        |
-| user_id               | bigint  | null: false, foreign_key: true |
-| postal_code           | string  | null: false                    |
-| prefecture_id         | integer | null: false                    |
-| city                  | string  | null: false                    |
-| street                | string  | null: false                    |
-| building              | string  |                                |
-| phone_number          | string  | null: false                    |
+| Column                | Type        | Options                        |
+| --------------------- | ------------| -----------------------------  |
+| user_id               | integer     | null: false                    |
+| postal_code           | string      | null: false                    |
+| prefecture_id         | integer     | null: false                    |
+| city                  | string      | null: false                    |
+| street                | string      | null: false                    |
+| building              | string      |                                |
+| phone_number          | string      | null: false                    |
+| order                 | references  | null: false, foreign_key: true |
 
 ### Association
-- has_many :orders
-- belongs_to :user
+- belongs_to :order
