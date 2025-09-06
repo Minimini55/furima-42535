@@ -9,7 +9,7 @@ class User < ApplicationRecord
   validates :password,
             format: { with: /\A(?=.*?[a-zA-Z])(?=.*?\d)[a-zA-Z\d]{6,}\z/, message: 'は半角英字と半角数字の両方を含めてください' }
 
-  with_options presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龠々]+\z/, message: 'は全角（漢字・ひらがな・カタカナ）で入力してください' } do
+  with_options presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龠々ー]+\z/, message: 'は全角（漢字・ひらがな・カタカナ）で入力してください' } do
     validates :last_name
     validates :first_name
   end
