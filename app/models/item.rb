@@ -24,7 +24,7 @@ class Item < ApplicationRecord
   end
 
   # priceが¥300から¥9,000,000までのとき以外且つ全角文字を含むときは保存できないようにする
-  validates :price, presence: true, numericality: {
+  validates :price, numericality: {
     only_integer: true,
     greater_than_or_equal_to: 300,
     less_than_or_equal_to: 9_999_999
