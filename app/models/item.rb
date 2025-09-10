@@ -23,7 +23,7 @@ class Item < ApplicationRecord
     validates :days_to_ship_id
   end
 
-  # ¥300から¥9,000,000までのとき以外は保存できないようにする
+  # priceが¥300から¥9,000,000までのとき以外且つ全角文字を含むときは保存できないようにする
   validates :price, presence: true, numericality: {
     only_integer: true,
     greater_than_or_equal_to: 300,
@@ -35,4 +35,7 @@ class Item < ApplicationRecord
 
   # 商品の説明文が1000文字を超えているときは保存できないようにする
   validates :description, length: { maximum: 1_000 }
+
+  # userが紐ついていないと保存できなようにする
+  validates :user, presence: true
 end
