@@ -39,4 +39,9 @@ class Item < ApplicationRecord
 
   # userが紐ついていないと保存できなようにする
   validates :user, presence: true
+
+  def owned_by?(user)
+    # ログインしていない場合を考慮し、userが存在するかを先に確認
+    user.present? && user_id == user.id
+  end
 end
