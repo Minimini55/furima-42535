@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :ensure_correct_user, only: [:edit, :update]
   before_action :find_item, only: [:show, :edit, :update]
+  before_action :ensure_correct_user, only: [:edit, :update]
 
   def index
     @items = Item.order(created_at: :desc)
@@ -29,7 +29,7 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update(item_params)
-      redirect_to item_path
+      redirect_to item_path(@item)
     else
       render :edit, status: :unprocessable_entity
     end
@@ -39,22 +39,16 @@ class ItemsController < ApplicationController
 
   def item_params
     params.require(:item).permit(
-      :image, :name, :description, :category_id, :condition_id, :item_condition_id,
-      :shipping_fee_payer_id, :prefecture_id, :days_to_ship_id, :day_to_ship_id, :price
+      :image, :name, :description, :category_id, :item_condition_id,
+      :shipping_fee_payer_id, :prefecture_id, :days_to_ship_id, :price
     ).merge(user_id: current_user.id)
-  end
-
-  def ensure_correct_user
-    # URLから編集したい商品の情報を取得する
-    @item = Item.find(params[:id])
-    # ログイン中のユーザーIDと商品の出品者のIDが一致しない場合
-    return if @item.user_id == current_user.id
-
-    # トップページにリダイレクトさせる
-    redirect_to root_path
   end
 
   def find_item
     @item = Item.find(params[:id])
+  end
+
+  def ensure_correct_user
+    redirect_to root_path unless @item.user == current_user
   end
 end
