@@ -9,10 +9,6 @@ class OrdersController < ApplicationController
     @order_shipping_address = OrderShippingAddress.new
   end
 
-  def new
-    @order_shipping_address = OrderShippingAddress.new
-  end
-
   def create
     @order_shipping_address = OrderShippingAddress.new(order_params)
     if @order_shipping_address.valid?
