@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-    # 新規登録（sign_up）の際に、nicknameパラメーターを許可する
     devise_parameter_sanitizer.permit(:sign_up, keys: [:nickname,
                                                        :last_name,
                                                        :first_name,
