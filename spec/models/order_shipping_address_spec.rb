@@ -87,7 +87,6 @@ RSpec.describe OrderShippingAddress, type: :model do
       it 'phone_numberに半角数字以外が含まれている場合は登録できない' do
         @order_shipping_address.phone_number = '090-1234-5678' # ハイフンを含む
         @order_shipping_address.valid?
-        # ↓↓↓ messageはあなたのバリデーション設定に合わせてください
         expect(@order_shipping_address.errors.full_messages).to include('Phone number is invalid. Include 10 or 11 digits')
       end
     end
